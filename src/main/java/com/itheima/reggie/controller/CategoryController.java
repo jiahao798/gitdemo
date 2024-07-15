@@ -23,7 +23,7 @@ public class CategoryController {
     * 新增分类
     * */
     @PostMapping
-    public R<String> save(Category category) {
+    public R<String> save(@RequestBody Category category) {
         log.info("category: {}", category);
         categoryService.save(category);
         return R.success("新增分类成功");
@@ -53,7 +53,7 @@ public class CategoryController {
     public R<String> delete(Long ids){
         log.info("删除分类，id: {}", ids);
 
-//        categoryService.removeById(ids);
+//        categoryService.removeById(id);
         categoryService.remove(ids);
         return R.success("分类信息删除成功");
     }
