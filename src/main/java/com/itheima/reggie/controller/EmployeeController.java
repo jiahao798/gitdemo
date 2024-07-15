@@ -13,6 +13,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.transform.Result;
 import java.time.LocalDateTime;
 
 @Slf4j
@@ -100,7 +101,7 @@ public class EmployeeController {
 
 
     @GetMapping("/page")
-    public R<Page> page(int page,int pageSize,String name){
+    public R<Page> page(int page, int pageSize, String name){
         log.info("page = {},pageSize = {},name = {}",page,pageSize,name);
 
         //构造分页构造器
@@ -113,11 +114,12 @@ public class EmployeeController {
         queryWrapper.like(StringUtils.isNotEmpty(name),Employee::getUsername,name);
 
         //添加排序条件
-        queryWrapper.orderByDesc(Employee::getCreateTime);
+        queryWrapper.orderByDesc(Employee::getUpdateTime);
 
         //执行查询
         employeeService.page(pageInfo,queryWrapper);
 
+        //返回查询结果
         return R.success(pageInfo);
     }
 
