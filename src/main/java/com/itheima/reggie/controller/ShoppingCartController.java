@@ -24,6 +24,9 @@ public class ShoppingCartController {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
+    /*
+    * 添加购物车
+    * */
     @PostMapping("/add")
     public R<ShoppingCart> add(@RequestBody ShoppingCart shoppingCart) {
         log.info("购物车数据: {}", shoppingCart);
@@ -46,6 +49,7 @@ public class ShoppingCartController {
             queryWrapper.eq(ShoppingCart::getSetmealId, shoppingCart.getSetmealId());
         }
 
+        //查询当前菜品或套餐是否在购物车中
         ShoppingCart cartServiceOne = shoppingCartService.getOne(queryWrapper);
 
         if(cartServiceOne != null) {
@@ -80,6 +84,9 @@ public class ShoppingCartController {
         return R.success(list);
     }
 
+    /*
+    * 清空购物车
+    * */
     @DeleteMapping("/clean")
     public R<String> clean(){
 
